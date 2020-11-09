@@ -19,7 +19,7 @@ router.get('/', function (req, response, next) {
             res.on("end", function () {
                 var buff = Buffer.concat(datas, size);
                 var result = buff.toString();//转码//var result = //不需要转编码,直接tostring  iconv.decode(buff, "utf8");
-                console.log(typeof(JSON.parse(result)));
+                console.log(JSON.parse(result));
                 response.json(JSON.parse(result));
             });
         }).on('error', (e) => {
