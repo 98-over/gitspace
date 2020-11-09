@@ -6,7 +6,7 @@ var iconv = require("iconv-lite");
 router.get('/', function (req, response, next) {
     var jscode = req.query.code;
     if (jscode != null) {
-        var url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxca4566015f232c7c&secret=3ffbf4bf07517f4e90bd4700a917ce5e&js_code=' + jscode + '&grant_type=authorization_code';
+        var url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxca4566015f232c7c&secret=9a9b955f48b60d40cbe6d048cda5d76d&js_code=' + jscode + '&grant_type=authorization_code';
         https.get(url, function (res) {
             console.log('statusCode:', res.statusCode);
             console.log('headers:', res.headers);
