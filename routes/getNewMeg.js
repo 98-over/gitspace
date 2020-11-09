@@ -20,9 +20,9 @@ router.get('/', function (req, res, next) {
 
     pool.getConnection(function (error, connection) {
         connection.query(sql, [receiveId, sendId, receiveId, sendId], function (error, result, fields) {
-            console.log(result[0]);
+            console.log(result[0].num);
             if(result[0]=null){
-                res.send(result[0]);
+                res.send(result[0].num);
             }
             else{
             res.send("0");
