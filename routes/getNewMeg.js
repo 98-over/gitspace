@@ -1,3 +1,4 @@
+const { json } = require('express');
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
@@ -20,7 +21,7 @@ router.get('/', function (req, res, next) {
 
     pool.getConnection(function (error, connection) {
         connection.query(sql, [receiveId, sendId, receiveId, sendId], function (error, result, fields) {
-            console.log(result);
+            console.log(JSON.parse(result));
             // if(result[0]=null){
             //     res.send(result[0].num);
             // }
