@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
     var receiveId = req.query.receiveId;
     var sendId = req.query.sendId;
     console.log(receiveId + "  " + sendId);
-    var sql = 'SELECT COUNT(*) num from message WHERE receive_id=? or receive_id=? GROUP BY send_id HAVING send_id=? and is_read=0 OR send_id=? and is_read=0';
+    var sql = 'SELECT * from message WHERE receive_id=? or receive_id=? GROUP BY send_id HAVING send_id=? and is_read=0 OR send_id=? and is_read=0';
     //var sql = 'SELECT COUNT(*) num from message WHERE receive_id=? and send_id=? OR send_id=? AND receive_id=? GROUP BY is_read HAVING is_read=0';
     var sql1 = 'UPDATE message set is_read=1';
     var pool = mysql.createPool({
