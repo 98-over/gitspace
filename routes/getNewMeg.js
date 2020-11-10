@@ -21,12 +21,12 @@ router.get('/', function (req, res, next) {
 
     pool.getConnection(function (error, connection) {
         connection.query(sql, [receiveId, sendId, receiveId, sendId], function (error, result, fields) {
-            console.log(JSON.stringify(result));
-            if(result[0]!=null){
+            if (err) throw err;
+            if (result[0] != null) {
                 res.json(result);
             }
-            else{
-            res.end();
+            else {
+                res.end();
             }
         });
         connection.release();
