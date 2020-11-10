@@ -82,12 +82,6 @@ wsServer.on('connection', function (wsConnect, request) {
   console.log('url is ' + url.toString()); // "/path?token=xxxxxx"
   let prarms = url.split('=')[1]; // token=xxxxxx
   console.log('url is ' + prarms);// {token:xxxxxxx}
-
-  // wsConnect.send(JSON.stringify({
-  //   fromId: 'ofBVL5OS8FjYLeD-OiET3PM9UJ5s',
-  //   messageType: 'new_meg',
-  //   message: '欢迎。。。'
-  // }));
   const uid = prarms;
   console.log(uid);
   links[uid] = wsConnect;
@@ -98,7 +92,10 @@ wsServer.on('connection', function (wsConnect, request) {
       if (client !== wsConnect && client.readyState === WebSocket.OPEN) {
         if (links[data.receive_id] === item) {
           item.send(JSON.stringify(data));
-          var sql = 'insert into message(receive_id,send_id,message,meg_time) values(?,?,?,?)';
+        }
+      }
+    });
+    var sql = 'insert into message(receive_id,send_id,message,meg_time) values(?,?,?,?)';
 
           var pool = mysql.createPool({
             host: '47.98.206.11',
@@ -114,9 +111,6 @@ wsServer.on('connection', function (wsConnect, request) {
             });
             connection.release();
           });
-        }
-      }
-    });
   });
 })
 
