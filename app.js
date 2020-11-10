@@ -96,7 +96,7 @@ wsServer.on('connection', function (wsConnect, request) {
         }
       }
     });
-    var sql = 'insert into message(receive_id,send_id,message,meg_time) values(?,?,?,?)';
+    var sql = 'insert into message(receive_id,send_id,message,meg_time,is_read) values(?,?,?,?.?)';
 
           var pool = mysql.createPool({
             host: '47.98.206.11',
