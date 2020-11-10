@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
     //var users = [];
     var receiveId = req.query.receiveId;
     var sendId = req.query.sendId;
-    var sql = 'SELECT * from message WHERE receive_id=? or receive_id=?  GROUP BY send_id  HAVING send_id=? OR send_id=?';
+    var sql = 'SELECT * from message WHERE receive_id=? and send_id=? or send_id=? and receive_id=?';
     var connection = mysql.createConnection({
         host: '47.98.206.11',
         user: 'root',
