@@ -107,7 +107,7 @@ wsServer.on('connection', function (wsConnect, request) {
           });
 
           pool.getConnection(function (error, connection) {
-            connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time], function (error, result, fields) {
+            connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time,0], function (error, result, fields) {
               if(error) throw error;
               else console.log("插入成功");
             });
