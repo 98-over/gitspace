@@ -26,6 +26,7 @@ var updateUserInfoRouter = require('./routes/updateUserInfo');
 var getUserRouter = require('./routes/getUser');
 var getNewMegRouter = require('./routes/getNewMeg');
 var testRouter = require('./routes/test');
+var getMessageRouter = require('./routes/getMessage');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/updateUserInfo', updateUserInfoRouter);
 app.use('/getUser',getUserRouter);
 app.use('/getNewMeg',getNewMegRouter);
 app.use('/test',testRouter);
+app.use('/getMessage',getMessageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
