@@ -12,8 +12,8 @@ var ws = require('ws');
 var fs = require('fs');
 var mysql = require('mysql');
 
-var keypath=path.join(__dirname, './certificate/private.pem');//我把秘钥文件放在运行命令的目录下测试
-var certpath=path.join(__dirname, './certificate/file.crt');//console.log(keypath);
+var keypath=path.join(__dirname, './certificate/1_online-zsc.com_bundle.crt');//我把秘钥文件放在运行命令的目录下测试
+var certpath=path.join(__dirname, './certificate/2_online-zsc.com.key');//console.log(keypath);
 var options = {
   key: fs.readFileSync(keypath,'utf-8'),
   cert: fs.readFileSync(certpath,'utf-8'),
