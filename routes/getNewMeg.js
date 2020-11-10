@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
 
     pool.getConnection(function (error, connection) {
         connection.query(sql, [receiveId, sendId, receiveId, sendId], function (error, result, fields) {
-            if (err) throw err;
+            if (error) throw error;
             if (result[0] != null) {
                 res.json(result);
             }

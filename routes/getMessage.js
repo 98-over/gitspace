@@ -18,7 +18,10 @@ router.get('/', function (req, res, next) {
     });
     connection.connect();
     connection.query(sql, [receiveId, sendId, receiveId, sendId], function (err, results) {
-        res.json(results);
+        if(err) throw err;
+        else{
+            res.json(results);
+        }
     });
 });
 
