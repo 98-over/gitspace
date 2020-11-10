@@ -10,6 +10,7 @@ var qs = require('qs');
 var _  = require('lodash');
 var ws = require('ws');
 var fs = require('fs');
+var mysql = require('mysql');
 
 var keypath=path.join(__dirname, './certificate/private.pem');//我把秘钥文件放在运行命令的目录下测试
 var certpath=path.join(__dirname, './certificate/file.crt');//console.log(keypath);
