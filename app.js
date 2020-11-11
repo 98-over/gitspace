@@ -87,7 +87,7 @@ wsServer.on('connection', function (wsConnect, request) {
     clientId:wsConnect._ultron.id,
     type:2
   }
-  wsConnect.send(init);
+  //wsConnect.send(init);
   wsConnect.on('message', function (message) {
     var data = JSON.parse(message);
     if (data == 'ping') {
