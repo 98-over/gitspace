@@ -84,7 +84,7 @@ wsServer.on('connection', function (wsConnect, request) {
   let prarms = url.split('=')[1]; // token=xxxxxx
   console.log('url is ' + prarms);// {token:xxxxxxx}
   const uid = prarms;
-  console.log(uid);
+  console.log(JSON.stringify(wsConnect));
   links[uid] = wsConnect;
   
   wsConnect.on('message', function (message) {
