@@ -84,12 +84,18 @@ wsServer.on('connection', function (wsConnect, request) {
   console.log("连接成功");
   wsConnect.on('message', function (message) {
     var data = JSON.stringify(message);
-    if (data == 'ping') {
-      wsConnect.send('1');
+    if (data.op == 'ping') {
+      var r = {
+        type: '1'
+      }
+      wsConnect.send(r);
     }
-    else if (message.data.type == 'bind') {
+    else if (data.op == 'bind') {
       links[message.data.openId] = wsConnect;
-      wsConnect.send('2');
+      var r = {
+        type: '2'
+      }
+      wsConnect.send(r);
     }
     else {
       var r = {
