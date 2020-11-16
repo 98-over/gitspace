@@ -84,6 +84,7 @@ wsServer.on('connection', function (wsConnect, request) {
   console.log("连接成功");
   wsConnect.on('message', function (message) {
     var data = JSON.stringify(message);
+    console.log(data.op);
     if (data.op == 'ping') {
       var r = {
         type: '1'
