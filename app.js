@@ -92,7 +92,7 @@ wsServer.on('connection', function (wsConnect, request) {
       wsConnect.send(r);
     }
     else if (data.op == 'bind') {
-      links[message.data.openId] = wsConnect;
+      links[data.openId] = wsConnect;
       var r = {
         type: '2'
       }
