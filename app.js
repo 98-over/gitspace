@@ -83,7 +83,7 @@ var wsServer = new ws.Server({ server: httpsServer });
 wsServer.on('connection', function (wsConnect, request) {
   console.log("连接成功");
   wsConnect.on('message', function (message) {
-    var data = JSON.parse(message);
+    var data = JSON.stringify(message);
     if (data == 'ping') {
       wsConnect.send('1');
     }
