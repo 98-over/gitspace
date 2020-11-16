@@ -29,6 +29,7 @@ var getNewMegRouter = require('./routes/getNewMeg');
 var testRouter = require('./routes/test');
 var getMessageRouter = require('./routes/getMessage');
 var userBindRouter = require('./routes/userBind');
+const { json } = require('express');
 
 var app = express();
 
@@ -87,21 +88,21 @@ wsServer.on('connection', function (wsConnect, request) {
     console.log(data.op);
     if (data.op == 'ping') {
       var r = {
-        type: '1'
+        "type": "1"
       }
-      wsConnect.send(r);
+      wsConnect.send(JSON.stringify(r));
     }
     else if (data.op == 'bind') {
       links[data.openId] = wsConnect;
       var r = {
-        type: '2'
+        "type": "2"
       }
-      wsConnect.send(r);
+      wsConnect.send(JSON.stringify(r));
     }
     else {
       var r = {
-        data: data,
-        type: '3'
+        "data": JSON.stringify(data),
+        "type": "3"
       }
       var rcvId = data.receive_id;
       wsServer.clients.forEach(function each(client) {
