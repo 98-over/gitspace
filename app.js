@@ -50,7 +50,7 @@ app.use('/getUser', getUserRouter);
 app.use('/getNewMeg', getNewMegRouter);
 app.use('/test', testRouter);
 app.use('/getMessage', getMessageRouter);
-app.use('/user_bind',userBindRouter);
+app.use('/user_bind', userBindRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -67,7 +67,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-let links = [];
+global: var links = [];
 
 var httpsServer = https.createServer(options, app);
 
@@ -81,57 +81,42 @@ httpsServer.listen(3000, function () {
 
 var wsServer = new ws.Server({ server: httpsServer });
 wsServer.on('connection', function (wsConnect, request) {
-  console.log(JSON.stringify(wsConnect._ultron.id));
-  links.push({ sid: wsConnect._ultron.id, connect: wsConnect });
-  var init={
-    clientId:wsConnect._ultron.id,
-    type:2
-  }
-  wsConnect.send(init);
+  console.log("连接成功");
   wsConnect.on('message', function (message) {
     var data = JSON.parse(message);
     if (data == 'ping') {
-      wsConnect.send()
+      wsConnect.send('1');
+    }
+    else if (message.data.type == 'bind') {
+      links[message.data.openId] = wsConnect;
+      wsConnect.send('2');
     }
     else {
-      var r={
-        data:data,
-        type:meg
+      var r = {
+        data: data,
+        type: '3'
       }
       var rcvId = data.receive_id;
-      var pool = mysql.createPool({
-        host: '47.98.206.11',
-        user: 'root',
-        password: '980613',
-        database: 'ptcom',
-        multipleStatements: true
-      });
-      var s = 'select client_id from user_info where open_id = ?';
-      pool.getConnection(function(err,connection){
-        connection.query(s,[rcvId],function(err,res,fields){
-          if(err) throw err;
-          if(res[0] != null){
-            wsServer.clients.forEach(function each(client) {
-              if (client !== wsConnect && client.readyState === WebSocket.OPEN) {
-                if (client._ultron.id == res[0].client_id) {
-                  client.send(JSON.stringify(r));
-                }
-              }
-            });
-            var sql = 'insert into message(receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?)';
-            pool.getConnection(function (error, connection) {
-              connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
-                if (error) throw error;
-                else console.log("插入成功");
-              });
-              connection.release();
-            });
-          }
+      wsServer.clients.forEach(function each(client) {
+        if (client !== wsConnect && client.readyState === WebSocket.OPEN && client === links[rcvId]) {
+          client.send(JSON.stringify(r));
+        }
+        var pool = mysql.createPool({
+          host: '47.98.206.11',
+          user: 'root',
+          password: '980613',
+          database: 'ptcom',
+          multipleStatements: true
+        });
+        var sql = 'insert into message(receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?)';
+        pool.getConnection(function (error, connection) {
+          connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
+            if (error) throw error;
+            else console.log("插入成功");
+          });
           connection.release();
         });
       });
-
-     
     }
   });
 })
