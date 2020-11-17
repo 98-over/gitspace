@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
     });
     
     pool.getConnection(function(err,connection){
-        connection.query(sql1,[receiveId+sendId],function(err,result){
+        connection.query(sql1,[sendId+receiveId],function(err,result){
             if(err) throw err;
         });
         connection.release();
