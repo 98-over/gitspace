@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
     //var users = [];
     var receiveId = req.query.receiveId;
     var sendId = req.query.sendId;
-    var sql = 'SELECT * from message WHERE receive_id=? and send_id=? or send_id=? and receive_id=?';
+    var sql = 'SELECT receive_id,send_id,message,meg_time from message WHERE meg_id=? or meg_id=?';
     var connection = mysql.createConnection({
         host: '47.98.206.11',
         user: 'root',
@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
         multipleStatements: true
     });
     connection.connect();
-    connection.query(sql, [receiveId, sendId, receiveId, sendId], function (err, results) {
+    connection.query(sql, [receiveId+sendId, sendId+receiveId], function (err, results) {
         if(err) throw err;
         else{
             res.json(results);

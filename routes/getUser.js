@@ -5,7 +5,7 @@ var mysql = require('mysql');
 /* GET home page. */
 router.get('/', function (req, res, next) {
   //var users = [];
-  var sql = 'SELECT DISTINCT user_info.open_id,user_info.nick_name,user_info.avatarUrl from user_info,message where user_info.open_id=message.receive_id and message.send_id=? or user_info.open_id=message.send_id and message.receive_id=?';
+  var sql = 'SELECT * from user_info where open_id != ?';
   //var sql = 'SELECT DISTINCT open_id,nick_name,avatarUrl from user_info,message where user_info.open_id=message.receive_id OR user_info.open_id=message.send_id and open_id=?';
   var connection = mysql.createConnection({
     host:'47.98.206.11',
@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
     multipleStatements: true 
   });
   connection.connect();
-  connection.query(sql,[req.query.openId,req.query.openId],function(err,results){
+  connection.query(sql,[req.query.openId],function(err,results){
     if(err) throw err;
     if(results[0] != null){
       res.json(results);

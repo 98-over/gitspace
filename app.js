@@ -105,44 +105,31 @@ wsServer.on('connection', function (wsConnect, request) {
         "type": "3"
       }
       var rcvId = data.receive_id;
+      var haveSend = 0;
       wsServer.clients.forEach(function each(client) {
         if (client !== wsConnect && client.readyState === ws.OPEN && client === links[rcvId]) {
           console.log('转发中');
           client.send(JSON.stringify(r));
-          var pool = mysql.createPool({
-            host: '47.98.206.11',
-            user: 'root',
-            password: '980613',
-            database: 'ptcom',
-            multipleStatements: true
-          });
-          var sql = 'insert into message(receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?)';
-          pool.getConnection(function (error, connection) {
-            connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time, 1], function (error, result, fields) {
-              if (error) throw error;
-              else console.log("插入成功");
-            });
-            connection.release();
-          });
-        }else{
-          var pool = mysql.createPool({
-            host: '47.98.206.11',
-            user: 'root',
-            password: '980613',
-            database: 'ptcom',
-            multipleStatements: true
-          });
-          var sql = 'insert into message(receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?)';
-          pool.getConnection(function (error, connection) {
-            connection.query(sql, [data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
-              if (error) throw error;
-              else console.log("插入成功");
-            });
-            connection.release();
-          });
+          haveSend = 1;
         }
-        
       });
+      if (haveSend == 0) {
+        var pool = mysql.createPool({
+          host: '47.98.206.11',
+          user: 'root',
+          password: '980613',
+          database: 'ptcom',
+          multipleStatements: true
+        });
+        var sql = 'insert into message(meg_id,receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?,?)';
+        pool.getConnection(function (error, connection) {
+          connection.query(sql, [data.receive_id+data.send_id,data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
+            if (error) throw error;
+            else console.log("插入成功");
+          });
+          connection.release();
+        });
+      }
     }
   });
 })
