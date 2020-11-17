@@ -118,9 +118,9 @@ wsServer.on('connection', function (wsConnect, request) {
             database: 'ptcom',
             multipleStatements: true
           });
-          var sql = 'insert into message(meg_id,receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?,?)';
+          var sql = 'insert into message(meg_id,receive_id,send_id,message,meg_time) values(?,?,?,?,?)';
           pool.getConnection(function (error, connection) {
-            connection.query(sql, [data.receive_id+data.send_id,data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
+            connection.query(sql, [data.receive_id+data.send_id,data.receive_id, data.send_id, data.message, data.meg_time], function (error, result, fields) {
               if (error) throw error;
               else console.log("插入成功");
             });
@@ -136,9 +136,9 @@ wsServer.on('connection', function (wsConnect, request) {
           database: 'ptcom',
           multipleStatements: true
         });
-        var sql = 'insert into message(meg_id,receive_id,send_id,message,meg_time,is_read) values(?,?,?,?,?,?)';
+        var sql = 'insert into message(meg_id,receive_id,send_id,message,meg_time) values(?,?,?,?,?)';
         pool.getConnection(function (error, connection) {
-          connection.query(sql, [data.receive_id+data.send_id,data.receive_id, data.send_id, data.message, data.meg_time, 0], function (error, result, fields) {
+          connection.query(sql, [data.receive_id+data.send_id,data.receive_id, data.send_id, data.message, data.meg_time,], function (error, result, fields) {
             if (error) throw error;
             else console.log("插入成功");
           });
