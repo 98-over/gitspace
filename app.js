@@ -106,7 +106,7 @@ wsServer.on('connection', function (wsConnect, request) {
       }
       var rcvId = data.receive_id;
       wsServer.clients.forEach(function each(client) {
-        if (client !== wsConnect && client.readyState === WebSocket.OPEN && client === links[rcvId]) {
+        if (client !== wsConnect && client.readyState === ws.OPEN && client === links[rcvId]) {
           client.send(JSON.stringify(r));
         }
         var pool = mysql.createPool({
