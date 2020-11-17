@@ -107,6 +107,7 @@ wsServer.on('connection', function (wsConnect, request) {
       var rcvId = data.receive_id;
       wsServer.clients.forEach(function each(client) {
         if (client !== wsConnect && client.readyState === ws.OPEN && client === links[rcvId]) {
+          console.log('转发中');
           client.send(JSON.stringify(r));
         }
         var pool = mysql.createPool({
