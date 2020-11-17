@@ -33,6 +33,25 @@ router.get('/', function (req, res, next) {
         });
         connection.release();
     });
+    res.end();
+});
+router.get('/update',function (req, res, next){
+    var sql1 = 'UPDATE message set receive_read = 1 WHERE meg_id=?';
+    var pool = mysql.createPool({
+        host: '47.98.206.11',
+        user: 'root',
+        password: '980613',
+        port: '3306',
+        database: 'ptcom',
+        multipleStatements: true
+    });
+    pool.getConnection(function(err,connection){
+        connection.query(sql1,[sendId+receiveId],function(err,result){
+            if(err) throw err;
+        });
+        connection.release();
+    });
+    res.end();
 });
 
 
