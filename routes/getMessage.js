@@ -24,11 +24,9 @@ router.get('/', function (req, res, next) {
             res.json(results);
         }
     });
-    connection.release();
-    connection.connect();
-    connection.query(sql1,[receiveId+sendId],function(err,result){
-        if(err) throw err;
-    });
+    // connection.query(sql1,[receiveId+sendId],function(err,result){
+    //     if(err) throw err;
+    // });
 });
 
 
