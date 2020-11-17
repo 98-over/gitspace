@@ -8,7 +8,8 @@ router.get('/', function (req, res, next) {
     var receiveId = req.query.receiveId;
     var sendId = req.query.sendId;
     console.log(receiveId + "  " + sendId);
-    var sql = 'SELECT COUNT(*) num FROM (SELECT * from message WHERE receive_id=? or receive_id=? GROUP BY send_id HAVING send_id=? and is_read=0 OR send_id=? and is_read=0)s';
+    var sql = 'select count(*) num from message where meg_id=? or meg_id=? and is_read=0';
+    //var sql = 'SELECT COUNT(*) num FROM (SELECT * from message WHERE receive_id=? or receive_id=? GROUP BY send_id HAVING send_id=? and is_read=0 OR send_id=? and is_read=0)s';
     //var sql = 'SELECT COUNT(*) num from message WHERE receive_id=? and send_id=? OR send_id=? AND receive_id=? GROUP BY is_read HAVING is_read=0';
     var sql1 = 'UPDATE message set is_read=1';
     var pool = mysql.createPool({
@@ -20,7 +21,7 @@ router.get('/', function (req, res, next) {
     });
 
     pool.getConnection(function (error, connection) {
-        connection.query(sql, [receiveId, sendId, receiveId, sendId], function (error, result, fields) {
+        connection.query(sql, [receiveId+sendId, sendId+receiveId], function (error, result, fields) {
             if (error) throw error;
             if (result[0] != null) {
                 res.json(result);
