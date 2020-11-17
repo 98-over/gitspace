@@ -24,6 +24,7 @@ router.get('/', function (req, res, next) {
             res.json(results);
         }
     });
+    connection.connect();
     connection.query(sql1,[receiveId+sendId],function(err,result){
         if(err) throw err;
     });
