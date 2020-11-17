@@ -27,13 +27,13 @@ router.get('/', function (req, res, next) {
         connection.release();
     });
     
-    pool.getConnection(function(err,connection){
-        connection.query(sql1,[sendId+receiveId],function(err,result){
-            if(err) throw err;
-        });
-        connection.release();
-    });
-    res.end();
+    // pool.getConnection(function(err,connection){
+    //     connection.query(sql1,[sendId+receiveId],function(err,result){
+    //         if(err) throw err;
+    //     });
+    //     connection.release();
+    // });
+    // res.end();
 });
 router.get('/update',function (req, res, next){
     var sql1 = 'UPDATE message set receive_read = 1 WHERE meg_id=?';
