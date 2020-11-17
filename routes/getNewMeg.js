@@ -34,4 +34,26 @@ router.get('/', function (req, res, next) {
     });
 });
 
+router.get('/getShowMeg',function(req, res, next){
+    var receiveId = req.query.receiveId;
+    var sendId = req.query.sendId;
+    var sql = 'SELECT message,meg_time from message WHERE meg_id=? or meg_id=? ORDER BY meg_time DESC LIMIT 1';
+    var pool = mysql.createPool({
+        host: '47.98.206.11',
+        user: 'root',
+        password: '980613',
+        database: 'ptcom',
+        multipleStatements: true
+    });
+
+    pool.getConnection(function (error, connection) {
+        connection.query(sql, [receiveId+sendId,sendId+receiveId], function (error, result, fields) {
+            if(err) throw err;
+            else{
+                res.json(result);
+            }
+        });
+    });
+
+});
 module.exports = router;
