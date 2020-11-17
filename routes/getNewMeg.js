@@ -48,7 +48,7 @@ router.get('/getShowMeg',function(req, res, next){
 
     pool.getConnection(function (error, connection) {
         connection.query(sql, [receiveId+sendId,sendId+receiveId], function (error, result, fields) {
-            if(err) throw err;
+            if(error) throw err;
             else{
                 res.json(result);
             }
