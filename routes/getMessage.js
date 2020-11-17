@@ -36,6 +36,8 @@ router.get('/', function (req, res, next) {
     // res.end();
 });
 router.get('/update',function (req, res, next){
+    var receiveId = req.query.receiveId;
+    var sendId = req.query.sendId;
     var sql1 = 'UPDATE message set receive_read = 1 WHERE meg_id=?';
     var pool = mysql.createPool({
         host: '47.98.206.11',
